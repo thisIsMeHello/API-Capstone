@@ -1,6 +1,8 @@
 let STORE = {
   randomNumbers: [],
   venueType: ["food", "drinks"],
+  domLocations: [$(".js-resultsFood"), $(".js-resultsDrinks")],
+  activity: ["eat", "drink"],
 }
 
 //Get first and second random numbers and push into STORE
@@ -19,6 +21,7 @@ function fetchRandomNumbers(){
 
 
 function generateResultHTML(object, i){
+  let activity = STORE.activity[i];
   let photoPrefix = object.response.groups[0].items[STORE.randomNumbers[i]].venue.featuredPhotos.items[0].prefix;
   let photoSuffix = object.response.groups[0].items[STORE.randomNumbers[i]].venue.featuredPhotos.items[0].suffix;
   let photo = `${photoPrefix}300x300${photoSuffix}`;
@@ -34,7 +37,9 @@ function generateResultHTML(object, i){
 
   return `
   <div class="venueContainer">
+    <p>${activity}</p>
     <img src=${photo}>
+    <div>${rating}</div>
     <h2>${venueName}</h2>
     <div>${firstLineAddress}</div>
     <div>${city}</div>
@@ -48,7 +53,7 @@ function generateResultHTML(object, i){
 
 
 //formats and sends query to Foursquare API, then pushes to DOM
-//get run twice by setupApp:
+//get run twice by setupApp using following data:
 // - location, priceLevel, food, 0
 // - location, priceLevel, drinks, 1
 
@@ -63,7 +68,7 @@ function queryFourSqAPI (location, priceLevel, section, i){
       client_id: clientId,
       client_secret: clientSecret,
       near: location,
-      radius: 10000,
+      radius: 20000,
       section: section,
       limit: 10,
       time: "any",
@@ -78,10 +83,9 @@ function queryFourSqAPI (location, priceLevel, section, i){
     console.log(data);
     let randomNum = STORE.randomNumbers[i]
     const result = generateResultHTML(data, i);
-    appendToDom('.js-results', result);
+    appendToDom(STORE.domLocations[i], result);
   })
 }
-
 
 //appends formated html to a selected DOM element
 function appendToDom(selector, content){
@@ -99,8 +103,20 @@ function setupApp(){
         let section = STORE.venueType[i];
         queryFourSqAPI(location, priceLevel, section, i);
       }
+    $('input').val("");
+    $('.resultsPage').removeClass("hidden");
+    $('.homePage').addClass("hidden");
+    tryAgain();
   });
 };
+
+function tryAgain(){
+  $('.tryAgain').on("click", function(){
+    console.log("tryAgain clicked!")
+    window.location.reload();
+  })
+
+}
 
 //actions the initialisation
 $(setupApp);

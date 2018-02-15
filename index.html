@@ -9,6 +9,9 @@
           src="https://code.jquery.com/jquery-3.2.1.min.js"
           integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
           crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
+
   <link rel="stylesheet" href="index.css">
 
 </head>
@@ -22,27 +25,24 @@
 
     <body>
 
-      <section role="region">
-        <p>Let real time, lab generated, quantum fluctuations in a vacuum, decide what you're going to do this evening!
-        </p>
+      <section class="homePage">
+        <p>Let real time, lab generated, quantum fluctuations in a vacuum, decide what you're going to do this evening!</p>
         <img class="yelpLogo" src="https://images.duckduckgo.com/iu/?u=http%3A%2F%2Fimg.talkandroid.com%2Fuploads%2F2014%2F08%2Ffoursquare_app_icon-450x450.png&f=1" alt="Yelp logo"</img>
 
         <form action="#" method="post" class="js-search-form">
           <input class="input js-input" id="location" name="location" type="text" placeholder="Location" required>
-
-        <input type="radio" name="richPoor" id="oneDollar" value="1"><label for="oneDollar">$</label>
-        <input type="radio" name="richPoor" id="twoDollar" value="2"><label for="twoDollar">$$</label>
-        <input type="radio" name="richPoor" id="threeDollar" value="3"><label for="threeDollar">$$$</label>
-        <input type="radio" name="richPoor" id="threeDollar" value="4"><label for="threeDollar">$$$$</label>
-        <button class="block button" type="submit">Let's go!</button>
+          <input type="radio" name="richPoor" id="oneDollar" value="1"><label for="oneDollar">$</label>
+          <input type="radio" name="richPoor" id="twoDollar" value="2"><label for="twoDollar">$$</label>
+          <input type="radio" name="richPoor" id="threeDollar" value="3"><label for="threeDollar">$$$</label>
+          <input type="radio" name="richPoor" id="threeDollar" value="4"><label for="threeDollar">$$$$</label>
+          <button class="block button" type="submit">Let's go!</button>
         </form>
       </section>
 
-      <section class="js-results">
-      </section>
-
-      <section class="js-map">
-
+      <section class="resultsPage hidden">
+        <div class="js-resultsFood"></div>
+        <div class="js-resultsDrinks"></div>
+        <button class="button tryAgain">Try Again</button>
       </section>
 
     </body>
