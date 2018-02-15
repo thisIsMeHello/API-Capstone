@@ -21,34 +21,41 @@ function fetchRandomNumbers(){
 
 
 function generateResultHTML(object, i){
-  let activity = STORE.activity[i];
-  let photoPrefix = object.response.groups[0].items[STORE.randomNumbers[i]].venue.featuredPhotos.items[0].prefix;
-  let photoSuffix = object.response.groups[0].items[STORE.randomNumbers[i]].venue.featuredPhotos.items[0].suffix;
-  let photo = `${photoPrefix}300x300${photoSuffix}`;
-  let venueName = object.response.groups[0].items[STORE.randomNumbers[i]].venue.name;
-  let rating = object.response.groups[0].items[STORE.randomNumbers[i]].venue.rating;
-  let firstLineAddress = object.response.groups[0].items[STORE.randomNumbers[i]].venue.location.address;
-  let city = object.response.groups[0].items[STORE.randomNumbers[i]].venue.location.city;
-  let postCode = object.response.groups[0].items[STORE.randomNumbers[i]].venue.location.postalCode;
-  let phoneNumber = object.response.groups[0].items[STORE.randomNumbers[i]].venue.contact.formattedPhone;
-  let faceBookCode = object.response.groups[0].items[STORE.randomNumbers[i]].venue.contact.facebook;
-  let facebookURL = `https://facebook.com/${faceBookCode}`
-  let website = object.response.groups[0].items[STORE.randomNumbers[i]].venue.url
+  try {
+    let activity = STORE.activity[i];
+    let photoPrefix = object.response.groups[0].items[STORE.randomNumbers[i]].venue.featuredPhotos.items[0].prefix;
+    let photoSuffix = object.response.groups[0].items[STORE.randomNumbers[i]].venue.featuredPhotos.items[0].suffix;
+    let photo = `${photoPrefix}300x300${photoSuffix}`;
+    let venueName = object.response.groups[0].items[STORE.randomNumbers[i]].venue.name;
+    let rating = object.response.groups[0].items[STORE.randomNumbers[i]].venue.rating;
+    let firstLineAddress = object.response.groups[0].items[STORE.randomNumbers[i]].venue.location.address;
+    let city = object.response.groups[0].items[STORE.randomNumbers[i]].venue.location.city;
+    let postCode = object.response.groups[0].items[STORE.randomNumbers[i]].venue.location.postalCode;
+    let phoneNumber = object.response.groups[0].items[STORE.randomNumbers[i]].venue.contact.formattedPhone;
+    let faceBookCode = object.response.groups[0].items[STORE.randomNumbers[i]].venue.contact.facebook;
+    let facebookURL = `https://facebook.com/${faceBookCode}`
+    let website = object.response.groups[0].items[STORE.randomNumbers[i]].venue.url
 
-  return `
-  <div class="venueContainer">
-    <p>${activity}</p>
-    <img src=${photo}>
-    <div>${rating}</div>
-    <h2>${venueName}</h2>
-    <div>${firstLineAddress}</div>
-    <div>${city}</div>
-    <div>${postCode}</div>
-    <div>${phoneNumber}</div>
-    <a href="${facebookURL}">Facebook</a>
-    <a href="${website}">Website</a>
-  </div>
-  `
+    return `
+    <div class="venueContainer">
+      <p>${activity}</p>
+      <img src=${photo}>
+      <div>${rating}</div>
+      <h2>${venueName}</h2>
+      <div>${firstLineAddress}</div>
+      <div>${city}</div>
+      <div>${postCode}</div>
+      <div>${phoneNumber}</div>
+      <a href="${facebookURL}">Facebook</a>
+      <a href="${website}">Website</a>
+    </div>
+    `
+  }
+  catch(err){
+    return `
+    <p>No results... Try again with different parameters!</p>;
+    `
+  }
 }
 
 
