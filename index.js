@@ -18,18 +18,19 @@ function fetchRandomNumbers(){
 //take returned JSON and create HTML section for each venue
 
 
-function generateResultHTML(returnedDataObject){
-  let photoPrefix = returnedDataObject.response.groups[0].items[STORE.randomNumbers[0]].venue.featuredPhotos.items[0].prefix;
-  let photoSuffix = returnedDataObject.response.groups[0].items[STORE.randomNumbers[0]].venue.featuredPhotos.items[0].suffix;
+function generateResultHTML(object, i){
+  let photoPrefix = object.response.groups[0].items[STORE.randomNumbers[i]].venue.featuredPhotos.items[0].prefix;
+  let photoSuffix = object.response.groups[0].items[STORE.randomNumbers[i]].venue.featuredPhotos.items[0].suffix;
   let photo = `${photoPrefix}300x300${photoSuffix}`;
-  let venueName = returnedDataObject.response.groups[0].items[STORE.randomNumbers[0]].venue.name;
-  let firstLineAddress = returnedDataObject.response.groups[0].items[STORE.randomNumbers[0]].venue.location.address;
-  let city = returnedDataObject.response.groups[0].items[STORE.randomNumbers[0]].venue.location.city;
-  let postCode = returnedDataObject.response.groups[0].items[STORE.randomNumbers[0]].venue.location.postalCode;
-  let phoneNumber = returnedDataObject.response.groups[0].items[STORE.randomNumbers[0]].venue.contact.formattedPhone;
-  let faceBookCode = returnedDataObject.response.groups[0].items[STORE.randomNumbers[0]].venue.contact.facebook;
+  let venueName = object.response.groups[0].items[STORE.randomNumbers[i]].venue.name;
+  let rating = object.response.groups[0].items[STORE.randomNumbers[i]].venue.rating;
+  let firstLineAddress = object.response.groups[0].items[STORE.randomNumbers[i]].venue.location.address;
+  let city = object.response.groups[0].items[STORE.randomNumbers[i]].venue.location.city;
+  let postCode = object.response.groups[0].items[STORE.randomNumbers[i]].venue.location.postalCode;
+  let phoneNumber = object.response.groups[0].items[STORE.randomNumbers[i]].venue.contact.formattedPhone;
+  let faceBookCode = object.response.groups[0].items[STORE.randomNumbers[i]].venue.contact.facebook;
   let facebookURL = `https://facebook.com/${faceBookCode}`
-  let website = returnedDataObject.response.groups[0].items[STORE.randomNumbers[0]].venue.url
+  let website = object.response.groups[0].items[STORE.randomNumbers[i]].venue.url
 
   return `
   <div class="venueContainer">
@@ -47,8 +48,11 @@ function generateResultHTML(returnedDataObject){
 
 
 //formats and sends query to Foursquare API, then pushes to DOM
+//get run twice by setupApp:
+// - location, priceLevel, food, 0
+// - location, priceLevel, drinks, 1
 
-function queryFourSqAPI (location, priceLevel, section){
+function queryFourSqAPI (location, priceLevel, section, i){
   var clientId = 'K0D0DBU3DHLWKXDSCSC0L5PK1RKTWD2LLKDYWCWYCE22XI55';
   var clientSecret = 'QZAEIAQCIA01JOQBW5QGYG01N2LNPYN2P0PRL3DDUGZOWAIK';
   var url = "https://api.foursquare.com/v2/venues/explore";
@@ -59,7 +63,7 @@ function queryFourSqAPI (location, priceLevel, section){
       client_id: clientId,
       client_secret: clientSecret,
       near: location,
-      radius: 5000,
+      radius: 10000,
       section: section,
       limit: 10,
       time: "any",
@@ -70,11 +74,10 @@ function queryFourSqAPI (location, priceLevel, section){
     }
   }
 
-
-
   $.ajax(settings).done(data=>{
     console.log(data);
-    const result = generateResultHTML(data, STORE.randomNumbers[0]);
+    let randomNum = STORE.randomNumbers[i]
+    const result = generateResultHTML(data, i);
     appendToDom('.js-results', result);
   })
 }
@@ -92,7 +95,10 @@ function setupApp(){
     event.preventDefault();
     let location = $('input').val();
     let priceLevel = $('input[name=richPoor]:checked').val();
-    queryFourSqAPI(location, priceLevel, "food");
+      for (let i=0; i<2; i++){
+        let section = STORE.venueType[i];
+        queryFourSqAPI(location, priceLevel, section, i);
+      }
   });
 };
 
