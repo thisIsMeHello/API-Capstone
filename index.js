@@ -53,7 +53,7 @@ function generateResultHTML(object, i){
   }
   catch(err){
     return `
-    <p>No results... Try again with different parameters!</p>;
+    <p>No results... Try again with different parameters!</p>
     `
   }
 }
