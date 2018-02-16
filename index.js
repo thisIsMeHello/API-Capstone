@@ -117,6 +117,7 @@ function setupApp(){
   });
 };
 
+//resets app to home page
 function tryAgain(){
   $('.tryAgain').on("click", function(){
     console.log("tryAgain clicked!")
