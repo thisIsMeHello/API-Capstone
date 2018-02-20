@@ -1,5 +1,6 @@
 let STORE = {
   randomNumbers: [],
+  localRandomNumbers: [],
   venueType: ["food", "drinks"],
   domLocations: [$(".js-resultsFood"), $(".js-resultsDrinks")],
   activity: ["eat", "drink"],
@@ -14,15 +15,15 @@ function fetchRandomNumbers(){
     let singleRandomDigitOne = parseInt(returnedRandomOne.toString().split('').pop());
     let singleRandomDigitTwo = parseInt(returnedRandomTwo.toString().split('').pop());
     STORE.randomNumbers.push(singleRandomDigitOne, singleRandomDigitTwo);
-    console.log("randomNumbers", STORE.randomNumbers)
+    console.log("Quantum Random Numbers", STORE.randomNumbers)
   });
 };
 
 function generateRandomNumbers(){
   for (let i=0; i<2; i++){
     let randomNum = Math.floor((Math.random() * 5) + 1);
-    STORE.randomNumbers.push(randomNum);
-    console.log("locally generated", randomNum);
+    STORE.localRandomNumbers.push(randomNum);
+    console.log("locally generated", STORE.localRandomNumbers);
   };
 };
 
@@ -101,13 +102,24 @@ function queryFourSqAPI (location, priceLevel, section, i){
     $('input').val("");
     $('.resultsPage').removeClass("hidden");
     $('.homePage').addClass("hidden");
-    let randomNum = STORE.randomNumbers[i]
+    let array = randomArrayChooser();
+    let randomNum = array[i];
     const result = generateResultHTML(data, i);
     appendToDom(STORE.domLocations[i], result);
   }).fail(response=>{
     $('.location-input-error').show();
     $('input').val("");
   })
+}
+
+function randomArrayChooser() {
+  if (typeof STORE.randomNumbers[0] !== 'undefined'){
+    return STORE.randomNumbers;
+    console.log("used STORE.randomNumbers")
+  } else {
+    return STORE.localRandomNumbers;
+    console.log("used STORE.localRandomNumbers")
+  };
 }
 
 //appends formated html to a selected DOM element
@@ -118,7 +130,7 @@ function appendToDom(domSelector, content){
 //initialises the app
 function setupApp(){
   fetchRandomNumbers();
-  // generateRandomNumbers();
+  generateRandomNumbers();
   $('.js-search-form').submit(event => {
     event.preventDefault();
     let location = $('input').val();
