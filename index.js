@@ -30,9 +30,9 @@ function generateRandomNumbers(){
 //take returned JSON and create HTML section for each venue
 
 
-function generateResultHTML(object, i){
+function generateResultHTML(data, array, i){
   try {
-    let venue = object.response.groups[0].items[STORE.randomNumbers[i]].venue;
+    let venue = data.response.groups[0].items[array[i]].venue;
     let activity = STORE.activity[i];
     let photoPrefix = venue.featuredPhotos.items[0].prefix;
     let photoSuffix = venue.featuredPhotos.items[0].suffix;
@@ -103,8 +103,8 @@ function queryFourSqAPI (location, priceLevel, section, i){
     $('.resultsPage').removeClass("hidden");
     $('.homePage').addClass("hidden");
     let array = randomArrayChooser();
-    let randomNum = array[i];
-    const result = generateResultHTML(data, i);
+    // let randomNum = array[i];
+    const result = generateResultHTML(data, array, i);
     appendToDom(STORE.domLocations[i], result);
   }).fail(response=>{
     $('.location-input-error').show();
@@ -129,7 +129,7 @@ function appendToDom(domSelector, content){
 
 //initialises the app
 function setupApp(){
-  fetchRandomNumbers();
+  // fetchRandomNumbers();
   generateRandomNumbers();
   $('.js-search-form').submit(event => {
     event.preventDefault();
