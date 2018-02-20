@@ -3,6 +3,7 @@ let STORE = {
   venueType: ["food", "drinks"],
   domLocations: [$(".js-resultsFood"), $(".js-resultsDrinks")],
   activity: ["eat", "drink"],
+  errorMsg: ["No food results, try again or change your search options!", "No bar results, try again or change your search options!"]
 }
 
 //Get first and second random numbers and push into STORE
@@ -17,24 +18,33 @@ function fetchRandomNumbers(){
   });
 };
 
+function generateRandomNumbers(){
+  for (let i=0; i<2; i++){
+    let randomNum = Math.floor((Math.random() * 5) + 1);
+    STORE.randomNumbers.push(randomNum);
+    console.log("locally generated", randomNum);
+  };
+};
+
 //take returned JSON and create HTML section for each venue
 
 
 function generateResultHTML(object, i){
   try {
+    let venue = object.response.groups[0].items[STORE.randomNumbers[i]].venue;
     let activity = STORE.activity[i];
-    let photoPrefix = object.response.groups[0].items[STORE.randomNumbers[i]].venue.featuredPhotos.items[0].prefix;
-    let photoSuffix = object.response.groups[0].items[STORE.randomNumbers[i]].venue.featuredPhotos.items[0].suffix;
+    let photoPrefix = venue.featuredPhotos.items[0].prefix;
+    let photoSuffix = venue.featuredPhotos.items[0].suffix;
     let photo = `${photoPrefix}300x300${photoSuffix}`;
-    let venueName = object.response.groups[0].items[STORE.randomNumbers[i]].venue.name;
-    let rating = object.response.groups[0].items[STORE.randomNumbers[i]].venue.rating;
-    let firstLineAddress = object.response.groups[0].items[STORE.randomNumbers[i]].venue.location.address;
-    let city = object.response.groups[0].items[STORE.randomNumbers[i]].venue.location.city;
-    let postCode = object.response.groups[0].items[STORE.randomNumbers[i]].venue.location.postalCode;
-    let phoneNumber = object.response.groups[0].items[STORE.randomNumbers[i]].venue.contact.formattedPhone;
-    let faceBookCode = object.response.groups[0].items[STORE.randomNumbers[i]].venue.contact.facebook;
-    let facebookURL = `https://facebook.com/${faceBookCode}`
-    let website = object.response.groups[0].items[STORE.randomNumbers[i]].venue.url
+    let venueName = venue.name;
+    let rating = venue.rating;
+    let firstLineAddress = venue.location.address;
+    let city = venue.location.city;
+    let postCode = venue.location.postalCode;
+    let phoneNumber = venue.contact.formattedPhone;
+    let faceBookCode = venue.contact.facebook;
+    let facebookURL = `https://facebook.com/${faceBookCode}`;
+    let website = venue.url;
 
     return `
     <div class="venueContainer">
@@ -53,7 +63,7 @@ function generateResultHTML(object, i){
   }
   catch(err){
     return `
-    <p>No results... Try again with different parameters!</p>
+    <p>${STORE.errorMsg[i]}</p>
     `
   }
 }
@@ -88,20 +98,27 @@ function queryFourSqAPI (location, priceLevel, section, i){
 
   $.ajax(settings).done(data=>{
     console.log(data);
+    $('input').val("");
+    $('.resultsPage').removeClass("hidden");
+    $('.homePage').addClass("hidden");
     let randomNum = STORE.randomNumbers[i]
     const result = generateResultHTML(data, i);
     appendToDom(STORE.domLocations[i], result);
+  }).fail(response=>{
+    $('.location-input-error').show();
+    $('input').val("");
   })
 }
 
 //appends formated html to a selected DOM element
-function appendToDom(selector, content){
-  $(selector).append(content);
+function appendToDom(domSelector, content){
+  $(domSelector).append(content);
 }
 
-//initialises the app's code
+//initialises the app
 function setupApp(){
   fetchRandomNumbers();
+  // generateRandomNumbers();
   $('.js-search-form').submit(event => {
     event.preventDefault();
     let location = $('input').val();
@@ -110,9 +127,7 @@ function setupApp(){
         let section = STORE.venueType[i];
         queryFourSqAPI(location, priceLevel, section, i);
       }
-    $('input').val("");
-    $('.resultsPage').removeClass("hidden");
-    $('.homePage').addClass("hidden");
+
     tryAgain();
   });
 };
@@ -120,10 +135,8 @@ function setupApp(){
 //resets app to home page
 function tryAgain(){
   $('.tryAgain').on("click", function(){
-    console.log("tryAgain clicked!")
     window.location.reload();
   })
-
 }
 
 //actions the initialisation

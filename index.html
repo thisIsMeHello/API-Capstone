@@ -29,7 +29,9 @@
         <img class="yelpLogo" src="https://images.duckduckgo.com/iu/?u=http%3A%2F%2Fimg.talkandroid.com%2Fuploads%2F2014%2F08%2Ffoursquare_app_icon-450x450.png&f=1" alt="Yelp logo"</img>
 
         <form action="#" method="post" class="js-search-form">
-          <input class="input js-input" id="location" name="location" type="text" placeholder="Enter a city name..." required>
+          <label for="location">Enter a city name</label>
+          <p class="location-input-error" style="display: none">Please enter a valid city location</p>
+          <input class="input js-input" id="location" name="location" type="text" placeholder="eg. London..." required>
           <input type="radio" name="richPoor" id="oneDollar" value="1"><label for="oneDollar">$</label>
           <input type="radio" name="richPoor" id="twoDollar" value="2"><label for="twoDollar">$$</label>
           <input type="radio" name="richPoor" id="threeDollar" value="3"><label for="threeDollar">$$$</label>
