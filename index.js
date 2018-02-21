@@ -56,9 +56,10 @@ function generateResultHTML(data, array, i){
       <div>${firstLineAddress}</div>
       <div>${city}</div>
       <div>${postCode}</div>
-      <div>${phoneNumber}</div>
-      <a href="${facebookURL}">Facebook</a>
-      <a href="${website}">Website</a>
+
+      <p>${phoneNumber === undefined ? "" : phoneNumber}</p>
+      <a href="${facebookURL}"><i class="fab fa-facebook-square colorBlack"></i></a>
+      <a href="${website}"><i class="fas fa-external-link-square-alt colorBlack"></i></a>
     </div>
     `
   }
@@ -102,6 +103,7 @@ function queryFourSqAPI (location, priceLevel, section, i){
     $('input').val("");
     $('.resultsPage').removeClass("hidden");
     $('.homePage').addClass("hidden");
+    $('.js-video').addClass("hidden");
     let array = randomArrayChooser();
     // let randomNum = array[i];
     const result = generateResultHTML(data, array, i);
@@ -112,14 +114,26 @@ function queryFourSqAPI (location, priceLevel, section, i){
   })
 }
 
-function randomArrayChooser() {
-  if (typeof STORE.randomNumbers[0] !== 'undefined'){
-    return STORE.randomNumbers;
+// function randomArrayChooser() {
+//   if (typeof STORE.randomNumbers[0] !== "undefined"){
+//     console.log("used STORE.randomNumbers")
+//     return STORE.randomNumbers;
+//   } else {
+//     console.log("used STORE.localRandomNumbers")
+//     return STORE.localRandomNumbers;
+//   };
+// }
+
+
+function randomArrayChooser(){
+  console.log(STORE.randomNumbers);
+  if (STORE.randomNumbers.length > 0){
     console.log("used STORE.randomNumbers")
+    return STORE.randomNumbers;
   } else {
-    return STORE.localRandomNumbers;
     console.log("used STORE.localRandomNumbers")
-  };
+    return STORE.localRandomNumbers;
+  }
 }
 
 //appends formated html to a selected DOM element
@@ -129,7 +143,7 @@ function appendToDom(domSelector, content){
 
 //initialises the app
 function setupApp(){
-  // fetchRandomNumbers();
+  fetchRandomNumbers();
   generateRandomNumbers();
   $('.js-search-form').submit(event => {
     event.preventDefault();

@@ -12,30 +12,33 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <link rel="stylesheet" href="index.css">
+  <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Montserrat+Alternates:700|Nunito:700" rel="stylesheet">
 
 </head>
-<body>
-  <main>
+  <body>
+    <main>
 
-    <header role="banner">
-     <h1>Quantum Night</h1>
-     <h2>A truly random night out</h2>
-    </header>
-
-    <body>
+      <video class="js-video" autoplay muted loop id="myVideo">
+        <source src="https://s3-us-west-1.amazonaws.com/mdiamond/barVid.webm" type="video/webm">
+      </video>
 
       <section class="homePage">
-        <p>Let real time, lab generated, quantum fluctuations in a vacuum, decide what you're going to do this evening!</p>
-        <img class="yelpLogo" src="https://images.duckduckgo.com/iu/?u=http%3A%2F%2Fimg.talkandroid.com%2Fuploads%2F2014%2F08%2Ffoursquare_app_icon-450x450.png&f=1" alt="Yelp logo"</img>
+        <header role="banner">
+         <h1 class="montAltFont">Quantum Nights</h1>
+         <h2><span class="textBackgroundBlack">A truly random night out</span></h2>
+        </header>
+
+        <p class="introText"><span class="textBackgroundBlack">Let real time, lab generated, quantum fluctuations in a vacuum, decide what you're going to do this evening!</span></p>
 
         <form action="#" method="post" class="js-search-form">
-          <label for="location">Enter a city name</label>
-          <p class="location-input-error" style="display: none">Please enter a valid city location</p>
-          <input class="input js-input" id="location" name="location" type="text" placeholder="eg. London..." required>
-          <input type="radio" name="richPoor" id="oneDollar" value="1"><label for="oneDollar">$</label>
-          <input type="radio" name="richPoor" id="twoDollar" value="2"><label for="twoDollar">$$</label>
-          <input type="radio" name="richPoor" id="threeDollar" value="3"><label for="threeDollar">$$$</label>
-          <input type="radio" name="richPoor" id="threeDollar" value="4"><label for="threeDollar">$$$$</label>
+          <input class="input js-input" id="location" name="location" type="text" placeholder="Enter a city name..." required>
+          <p style="display: none; color: red" class="location-input-error">Please enter a valid location</p>
+          <div>
+            <input class="radioButton" type="radio" name="richPoor" id="oneDollar" value="1"><label for="oneDollar">$</label>
+            <input class="radioButton" type="radio" name="richPoor" id="twoDollar" value="2"><label for="twoDollar">$$</label>
+            <input class="radioButton" type="radio" name="richPoor" id="threeDollar" value="3"><label for="threeDollar">$$$</label>
+            <input class="radioButton" type="radio" name="richPoor" id="threeDollar" value="4"><label for="threeDollar">$$$$</label>
+          </div>
           <button class="block button" type="submit">Let's go!</button>
         </form>
       </section>
@@ -46,8 +49,7 @@
         <button class="button tryAgain">Try Again</button>
       </section>
 
-    </body>
-  </main>
-  <script src="index.js"></script>
-</body>
+    </main>
+    <script src="index.js"></script>
+  </body>
 </html>
