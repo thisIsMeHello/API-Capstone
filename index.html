@@ -31,13 +31,17 @@
         <p class="introText"><span class="textBackgroundBlack">Let real time, lab generated, quantum fluctuations in a vacuum, decide what you're going to do this evening!</span></p>
 
         <form action="#" method="post" class="js-search-form">
-          <input class="input js-input" id="location" name="location" type="text" placeholder="Enter a city name..." required>
+          <label for="location">Enter a city</label>
+          <input class="input js-input" id="location" name="location" type="text" placeholder="eg. London..." required>
           <p style="display: none; color: red" class="location-input-error">Please enter a valid location</p>
           <div>
-            <input class="radioButton" type="radio" name="richPoor" id="oneDollar" value="1"><label for="oneDollar">$</label>
-            <input class="radioButton" type="radio" name="richPoor" id="twoDollar" value="2"><label for="twoDollar">$$</label>
-            <input class="radioButton" type="radio" name="richPoor" id="threeDollar" value="3"><label for="threeDollar">$$$</label>
-            <input class="radioButton" type="radio" name="richPoor" id="threeDollar" value="4"><label for="threeDollar">$$$$</label>
+            <fieldset>
+              <legend>&nbsp; select price level &nbsp;</legend>
+              <input class="radioButton" type="radio" name="richPoor" id="oneDollar" value="1"><label for="oneDollar">$</label>
+              <input class="radioButton" type="radio" name="richPoor" id="twoDollar" value="2"><label for="twoDollar">$$</label>
+              <input class="radioButton" type="radio" name="richPoor" id="threeDollar" value="3"><label for="threeDollar">$$$</label>
+              <input class="radioButton" type="radio" name="richPoor" id="threeDollar" value="4"><label for="threeDollar">$$$$</label>
+            </fieldset>
           </div>
           <button class="block button" type="submit">Let's go!</button>
         </form>

@@ -38,7 +38,7 @@ function generateResultHTML(data, array, i){
     let photoSuffix = venue.featuredPhotos.items[0].suffix;
     let photo = `${photoPrefix}300x300${photoSuffix}`;
     let venueName = venue.name;
-    let rating = venue.rating;
+    let rating = `rating ${venue.rating}`;
     let firstLineAddress = venue.location.address;
     let city = venue.location.city;
     let postCode = venue.location.postalCode;
@@ -49,19 +49,26 @@ function generateResultHTML(data, array, i){
 
     return `
     <div class="venueContainer">
-      <p>${activity}</p>
-      <img src=${photo}>
-      <div>${rating}</div>
-      <h2>${venueName}</h2>
-      <div>${firstLineAddress}</div>
-      <div>${city}</div>
-      <div>${postCode}</div>
+      <p class="eatDrink montAltFont">${activity}</p>
 
-      <p>${phoneNumber === undefined ? "" : phoneNumber}</p>
-      <a href="${facebookURL}"><i class="fab fa-facebook-square colorBlack"></i></a>
-      <a href="${website}"><i class="fas fa-external-link-square-alt colorBlack"></i></a>
+      <div style="display: flex; align-items: flex-end; flex-wrap: wrap">
+        <img class="inlineBlock" src=${photo}>
+        <div>
+          <div class="inlineBlock">
+            <h2 class="venueName">${venueName}</h2><a href="${facebookURL}"><i class="fab fa-facebook-square colorWhite icons"></i></a><a href="${website}"><i class="fas fa-external-link-square-alt colorWhite icons"></i></a>
+          </div>
+
+          <p class="">${rating}</p>
+          <p class="firstLineAddress">${firstLineAddress}</p>
+          <p>${city}</p>
+          <p>${postCode}</p>
+          <p class="phoneNumber inlineBlock"><i class="fas fa-phone inlineBlock"></i> ${phoneNumber === undefined ? "not available" : phoneNumber}</p>
+        </div>
+      </div>
+
     </div>
-    `
+`
+
   }
   catch(err){
     return `
