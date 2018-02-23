@@ -48,25 +48,30 @@ function generateResultHTML(data, array, i){
     let website = venue.url;
 
     return `
-    <div class="venueContainer">
+    <section class="venueContainer inlineBlock">
+
       <p class="eatDrink montAltFont">${activity}</p>
 
       <div style="display: flex; align-items: flex-end; flex-wrap: wrap">
+
         <img class="inlineBlock" src=${photo}>
-        <div>
+        <address>
           <div class="inlineBlock">
-            <h2 class="venueName">${venueName}</h2><a href="${facebookURL}"><i class="fab fa-facebook-square colorWhite icons"></i></a><a href="${website}"><i class="fas fa-external-link-square-alt colorWhite icons"></i></a>
+            <h2 class="venueName">${venueName}</h2>
+            <div class="icons">
+              <a href="${facebookURL}"><i class="fab fa-facebook-square colorWhite icon"></i></a><a href="${website}"><i class="fas fa-external-link-square-alt colorWhite icon"></i></a><span class="">${rating}</span>
+            </div>
           </div>
 
-          <p class="">${rating}</p>
           <p class="firstLineAddress">${firstLineAddress}</p>
           <p>${city}</p>
           <p>${postCode}</p>
           <p class="phoneNumber inlineBlock"><i class="fas fa-phone inlineBlock"></i> ${phoneNumber === undefined ? "not available" : phoneNumber}</p>
-        </div>
+        </address>
+
       </div>
 
-    </div>
+    </section>
 `
 
   }
