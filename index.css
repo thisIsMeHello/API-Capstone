@@ -1,14 +1,25 @@
 body{
-  margin: 5px;
+  /* margin: 5px; */
   font-family: Oxygen;
   /* line-height: 1.5em; */
   letter-spacing: 1px;
 }
 
+.homePageContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column
+}
+
 .homePage{
-  position: fixed;
+  z-index: 1;
   color: white;
   padding: 10px;
+  border-radius: 5px;
+  border: 1px solid white;
+  /* box-shadow: 5px 5px 5px white; */
 }
 
 .montAltFont{
@@ -17,6 +28,10 @@ body{
 
 .dark-background{
   background-color: rgba(0, 0, 0, 0.3)
+}
+
+.p1{
+  padding: 8px;
 }
 
 h1{
@@ -47,7 +62,6 @@ h2{
   padding: 5px;
   display: block;
   margin-top: 5px;
-  margin-bottom: 20px;
   border: 1px solid black;
   border-radius: 5px;
   transition: box-shadow 0.3s linear;
@@ -102,9 +116,10 @@ h2{
 }
 
 fieldset{
-  border: none;
-  display: inline;
-  padding: 0;
+  /* border: none; */
+display: inline;
+margin-top: 10px;
+  /* padding: 0; */ */
 }
 
 /* fieldset legend{
@@ -194,6 +209,7 @@ label{
   background-color: black;
   padding: 20px;
   margin: 0;
+  min-height: 100vh;
 }
 
 .venueContainer{
